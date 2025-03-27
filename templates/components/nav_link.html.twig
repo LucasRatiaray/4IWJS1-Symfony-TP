@@ -1,0 +1,19 @@
+{# templates/components/nav_link.html.twig #}
+{% set isActive = (app.request.attributes.get('_route') == routeName) %}
+
+<a
+    class="
+        flex items-center space-x-2 py-1 hover:font-semibold group
+        {% if isActive %}
+            border-r-4 border-r-red-600 pr-20 font-semibold
+        {% endif %}
+    "
+    href="{{ path(routeName) }}"
+>
+    {% if isActive %}
+        {{ icon|replace({ '<svg': '<svg class="fill-red-600 h-5 w-5 group-hover:fill-red-600"' })|raw }}
+    {% else %}
+        {{ icon|replace({ '<svg': '<svg class="h-5 w-5 group-hover:fill-red-600"' })|raw }}
+    {% endif %}
+    <span>{{ text }}</span>
+</a>
