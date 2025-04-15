@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
+use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,15 +11,26 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
-    {
-        return $this->render('index.html.twig');
+    public function index(
+        MovieRepository $movieRepository
+    ): Response {
+        $movies = $movieRepository->findAll();
+        return $this->render('index.html.twig', [
+            'movies' => $movies,
+        ]);
     }
 
     #[Route('/discover', name: 'app_discover')]
-    public function discover(): Response
+    public function discover(
+        MovieRepository $movieRepository, CategoryRepository $categoryRepository
+    ): Response
     {
-        return $this->render('discover.html.twig');
+        $movies = $movieRepository->findAll();
+        $categories = $categoryRepository->findAll();
+        return $this->render('discover.html.twig', [
+            'movies' => $movies,
+            'categories' => $categories,
+        ]);
     }
 
     #[Route('/lists', name: 'app_lists')]

@@ -1,7 +1,7 @@
 services:
 
   mysql:
-    image: mysql:latest
+    image: mariadb:10.11.2
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: streemi
